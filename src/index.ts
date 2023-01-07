@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT;
 
 app.get('/', (req, res) => {
-  res.send('Express + TypeScript Server');
+  res.send('ChatGPT server is running OK');
 });
 
 app.listen(port, () => {
