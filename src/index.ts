@@ -1,5 +1,5 @@
 import express from 'express';
-import * as dotenv from 'dotenv';
+import dotenv from 'dotenv';
 import { getChatGPTAPI, ChatGPTAPIBrowser } from './chatgpt.js';
 
 dotenv.config();
