@@ -1,6 +1,7 @@
 import express, { Request } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import { errorHandler } from './middlewares.js';
 import { getChatGPTAPI } from './chatgpt.js';
 
 interface CreateChatGPTMessageRequestBody {
@@ -11,8 +12,8 @@ interface CreateChatGPTMessageRequestBody {
 
 interface CreateChatGPTMessageResponse {
   answer: string;
-  conversationId?: string;
-  messageId?: string;
+  conversationId: string;
+  messageId: string;
 }
 
 dotenv.config();
@@ -23,6 +24,7 @@ const api = await getChatGPTAPI();
 
 app.use(cors());
 app.use(express.json());
+app.use(errorHandler);
 
 app.get('/', (req, res) => {
   res.send('ChatGPT server is running OK');
@@ -37,6 +39,7 @@ app.post(
       CreateChatGPTMessageRequestBody
     >,
     res,
+    next,
   ) => {
     const { text, conversationId, parentMessageId } = req.body;
 
@@ -51,16 +54,11 @@ app.post(
         messageId: answer.messageId,
       });
     } catch (error: unknown) {
-      let errorMessage: string;
-      if (typeof error === 'string') {
-        errorMessage = error;
-      } else if (error instanceof Error) {
-        errorMessage = error.message;
-      } else {
-        errorMessage = 'Something went wrong';
+      if (error instanceof Error) {
+        return next(error);
       }
-
-      res.status(500).json({ answer: errorMessage });
+      const errorMessage = typeof error === 'string' ? error : 'Something went wrong';
+      return next(new Error(errorMessage));
     }
   },
 );
