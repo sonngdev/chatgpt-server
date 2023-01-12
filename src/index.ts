@@ -5,10 +5,14 @@ import { getChatGPTAPI } from './chatgpt.js';
 
 interface CreateChatGPTMessageRequestBody {
   text: string;
+  conversationId?: string;
+  parentMessageId?: string;
 }
 
 interface CreateChatGPTMessageResponse {
   answer: string;
+  conversationId?: string;
+  messageId?: string;
 }
 
 dotenv.config();
@@ -34,11 +38,18 @@ app.post(
     >,
     res,
   ) => {
-    const { text } = req.body;
+    const { text, conversationId, parentMessageId } = req.body;
 
     try {
-      const answer = await api.sendMessage(text);
-      res.json({ answer: answer.response });
+      const answer = await api.sendMessage(text, {
+        conversationId,
+        parentMessageId,
+      });
+      res.json({
+        answer: answer.response,
+        conversationId: answer.conversationId,
+        messageId: answer.messageId,
+      });
     } catch (error: unknown) {
       let errorMessage: string;
       if (typeof error === 'string') {
