@@ -1,5 +1,7 @@
 # API server for ChatGPT
 
+Backend server for **ChatGPT With Voice**. You can check out [the website](https://chatgpt.sonng.dev/), or find the [frontend repo](https://github.com/thanhsonng/chatgpt-voice) on GitHub.
+
 ## Installation
 Clone this repo.
 
