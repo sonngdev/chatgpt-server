@@ -6,13 +6,11 @@ import { getChatGPTAPI } from './chatgpt.js';
 
 interface CreateChatGPTMessageRequestBody {
   text: string;
-  conversationId?: string;
   parentMessageId?: string;
 }
 
 interface CreateChatGPTMessageResponse {
   answer: string;
-  conversationId: string;
   messageId: string;
 }
 
@@ -41,17 +39,15 @@ app.post(
     res,
     next,
   ) => {
-    const { text, conversationId, parentMessageId } = req.body;
+    const { text, parentMessageId } = req.body;
 
     try {
-      const answer = await api.sendMessage(text, {
-        conversationId,
+      const response = await api.sendMessage(text, {
         parentMessageId,
       });
       res.json({
-        answer: answer.response,
-        conversationId: answer.conversationId,
-        messageId: answer.messageId,
+        answer: response.text,
+        messageId: response.id,
       });
     } catch (error: unknown) {
       if (error instanceof Error) {

@@ -1,25 +1,15 @@
-import { ChatGPTAPIBrowser } from 'chatgpt';
+import { ChatGPTAPI } from 'chatgpt';
 
-export { ChatGPTAPIBrowser };
+export { ChatGPTAPI };
 
-export async function getChatGPTAPI(): Promise<ChatGPTAPIBrowser> {
-  const email = process.env.OPENAI_EMAIL;
-  const password = process.env.OPENAI_PASSWORD;
+export async function getChatGPTAPI(): Promise<ChatGPTAPI> {
+  const apiKey = process.env.OPENAI_API_KEY;
 
-  if (!email) {
-    throw new Error('Missing OpenAI email. Please provide OPENAI_EMAIL as an env variable.');
-  }
-  if (!password) {
-    throw new Error('Missing OpenAI password. Please provide OPENAI_PASSWORD as an env variable.');
+  if (!apiKey) {
+    throw new Error('Missing OpenAI API key. Please provide OPENAI_API_KEY as an env variable.');
   }
 
-  const api = new ChatGPTAPIBrowser({
-    email,
-    password,
-    debug: true,
-  });
-
-  await api.initSession();
+  const api = new ChatGPTAPI({ apiKey });
 
   return api;
 }
