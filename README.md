@@ -1,12 +1,12 @@
 # API server for ChatGPT
 
-Backend server for **ChatGPT With Voice**, now using the ✨ official ChatGPT APIs ✨. You can check out [the website](https://chatgpt.sonng.dev/), or find the [frontend repo](https://github.com/thanhsonng/chatgpt-voice) on GitHub.
+Backend server for **ChatGPT With Voice**, now using the ✨ official ChatGPT APIs ✨. You can check out [the website](https://chatgpt.sonng.dev/), or find the [frontend repo](https://github.com/sonngdev/chatgpt-voice) on GitHub.
 
 ## Installation
 Clone this repo.
 
 ```bash
-git clone https://github.com/thanhsonng/chatgpt-server.git
+git clone https://github.com/sonngdev/chatgpt-server.git
 ```
 
 Prepare environment variables by creating `.env` at the project root. You need to sign up for an [OpenAI API Key](https://platform.openai.com/overview).
